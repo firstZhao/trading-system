@@ -19,6 +19,11 @@ public class TransactionServiceStressTest {
     @Autowired
     private TransactionService transactionService;
 
+    /**
+     * 创建记录 输出成功失败条数 以及耗时记录
+     *
+     * @throws InterruptedException
+     */
     @Test
     void stressTestConcurrentTransactions() throws InterruptedException {
         int threadCount = 100;
@@ -36,6 +41,7 @@ public class TransactionServiceStressTest {
                         String userId = UUID.randomUUID().toString();
                         Transaction transaction = transactionService.createTransaction(
                                 userId, new BigDecimal("10.00"), "USD", TradeCardType.DEBIT.getType());
+                        System.out.println("insert success ===" + transaction.getId());
                         successCount.incrementAndGet();
                     } catch (Exception e) {
                         failureCount.incrementAndGet();
